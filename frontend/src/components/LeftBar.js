@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, List, ListItem, ListItemText, Divider, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const LeftBar = () => {
   return (
@@ -19,14 +20,14 @@ const LeftBar = () => {
       </Typography>
       <Divider />
       <List>
-        <ListItem button>
+        <ListItem button component={Link} to="/">
           <ListItemText primary="Search Shows" />
         </ListItem>
-        <ListItem button>
+        <ListItem button component={Link} to="/favorites">
           <ListItemText primary="Favorites" />
         </ListItem>
-        <ListItem button>
-          <ListItemText primary="Settings" />
+        <ListItem button component={Link} to="/episodes/:showId">
+          <ListItemText primary="Episodes" />
         </ListItem>
       </List>
     </Box>

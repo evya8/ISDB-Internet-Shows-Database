@@ -9,6 +9,7 @@ import { SearchProvider } from "./context/SearchContext";
 import { EpisodesProvider } from "./context/EpisodesContext";
 import SearchAndFilterPage from './pages/SearchAndFilterPage';
 import EpisodesPage from "./pages/EpisodesPage";
+import FavoritesPage from "./pages/FavoritesPage";
 import { Box, CssBaseline } from '@mui/material';
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
                                     <Routes>
                                         <Route path="/" element={<SearchAndFilterPage />} />
                                         <Route path="/episodes/:showId" element={<EpisodesPage />} />
+                                        <Route path="/favorites" element={<FavoritesPage />} /> 
                                     </Routes>
                                 </Box>
                                 <RightBar />
