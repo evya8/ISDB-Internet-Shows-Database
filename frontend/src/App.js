@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import NavBar from './components/NavBar';
+import LeftBar from './components/LeftBar';
+import RightBar from './components/RightBar';
+import { ThemeProviderComponent } from './context/ThemeContext';
+import { AppProvider } from './context/AppContext';
+import SearchAndFilterPage from './pages/SearchAndFilterPage';
+import { Box, CssBaseline } from '@mui/material';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProviderComponent>
+      <AppProvider>
+        <CssBaseline />
+        <NavBar />
+        <Box sx={{ display: 'flex', pt: 8 }}>
+          <LeftBar />
+          <Box sx={{ flex: 1, ml: 30, mr: 30, mt: 2 }}>
+            <SearchAndFilterPage />
+          </Box>
+          <RightBar />
+        </Box>
+      </AppProvider>
+    </ThemeProviderComponent>
   );
-}
+};
 
 export default App;
