@@ -16,13 +16,13 @@ const ShowCard = ({ show, onViewEpisodes }) => {
   };
 
   return (
-    <Card sx={{ display: 'flex', mb: 2, boxShadow: 3 }}>
+    <Card sx={{ mb: 2, boxShadow: 3, display: 'flex', flexDirection: 'column' }}>
       {show.image && (
         <CardMedia
           component="img"
-          image={show.image.medium}
+          image={show.image}
           alt={show.name}
-          sx={{ width: 150 }}
+          sx={{ height: 300, objectFit: 'cover' }}
         />
       )}
       <CardContent sx={{ flex: 1 }}>
@@ -40,7 +40,7 @@ const ShowCard = ({ show, onViewEpisodes }) => {
           Genres: {show.genres.join(', ')}
         </Typography>
         <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
-          Rating: {show.rating.average || 'N/A'}
+          Rating: {show.rating || 'N/A'}
         </Typography>
         <Button variant="contained" color="primary" onClick={() => onViewEpisodes(show.id)}>
           View Episodes

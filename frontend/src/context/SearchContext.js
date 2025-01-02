@@ -1,11 +1,11 @@
-// SearchContext.js
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useMemo } from "react";
 import axiosInstance from "../utils/AxiosInstance";
 
 const SearchContext = createContext();
 
 export const SearchProvider = ({ children }) => {
     const [searchResults, setSearchResults] = useState([]);
+    const [filters, setFilters] = useState({ genre: "", rating: "", language: "" });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -17,7 +17,7 @@ export const SearchProvider = ({ children }) => {
                 params: { query },
             });
             setSearchResults(response.data);
-            console.log(response.data)
+            console.log(response.data);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -25,9 +25,47 @@ export const SearchProvider = ({ children }) => {
         }
     };
 
+    const updateFilter = (key, value) => {
+        setFilters((prevFilters) => ({
+          ...prevFilters,
+          [key]: Array.isArray(value) ? value : [value], 
+        }));
+      };
+
+    const filteredResults = useMemo(() => {
+        const results = searchResults.filter((item) => {
+            const matchesGenre =
+                filters.genre.length > 0
+                    ? item.genres?.some((genre) => filters.genre.includes(genre)) || !item.genres || item.genres.length === 0
+                    : true;
+            const matchesRating = filters.ratingRange
+                    ? item.rating?.average === undefined || 
+                      (item.rating.average >= filters.ratingRange[0] &&
+                       item.rating.average <= filters.ratingRange[1])
+                    : true;
+            const matchesLanguage =
+                filters.language ? item.language === filters.language || !item.language : true;
+    
+            return matchesGenre && matchesRating && matchesLanguage;
+        });
+    
+        console.log("Filters:", filters);
+        console.log("Filtered Results:", results);
+        return results;
+    }, [searchResults, filters]);
+    
+
     return (
         <SearchContext.Provider
-            value={{ searchResults, loading, error, searchTVShows }}
+            value={{
+                searchResults,
+                filteredResults,
+                filters,
+                loading,
+                error,
+                searchTVShows,
+                updateFilter,
+            }}
         >
             {children}
         </SearchContext.Provider>
