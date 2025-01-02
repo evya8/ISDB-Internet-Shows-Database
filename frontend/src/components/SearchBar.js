@@ -1,31 +1,44 @@
-import React, { useState } from 'react';
-import { Box, TextField, Button } from '@mui/material';
-import { useAppContext } from '../context/AppContext';
+import React, { useState } from "react";
+import { TextField, Button, Box } from "@mui/material";
+import { useSearch } from "../context/SearchContext";
 
+const SearchBar = () => {
+    const { searchTVShows } = useSearch();
+    const [query, setQuery] = useState("");
 
-const SearchBar = ({ onSearch }) => {
-  const { searchShows } = useAppContext();
-  const [query, setQuery] = useState('');
+    const handleSearch = () => {
+        if (query.trim()) {
+            searchTVShows(query);
+        }
+    };
 
-  const handleSearch = () => {
-    if (query.trim()) {
-      searchShows(query); 
-    }
-  };
-
-  return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-      <TextField
-        label="Search TV Shows"
-        variant="outlined"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <Button variant="contained" onClick={handleSearch}>
-        Search
-      </Button>
-    </Box>
-  );
+    return (
+        <Box
+            sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 2,
+                margin: 2,
+            }}
+        >
+            <TextField
+                variant="outlined"
+                label="Search TV Shows"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                sx={{ width: "70%" }}
+            />
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSearch}
+                sx={{ height: "56px" }}
+            >
+                Search
+            </Button>
+        </Box>
+    );
 };
 
 export default SearchBar;

@@ -30,8 +30,8 @@ const FilterControls = ({ filters = {}, updateFilter = () => {} }) => {
         value={defaultFilters.rating}
         onChange={(e, value) => updateFilter('rating', value)}
         min={0}
-        max={5}
-        step={0.5}
+        max={10}
+        step={0.1}
         valueLabelDisplay="auto"
       />
 

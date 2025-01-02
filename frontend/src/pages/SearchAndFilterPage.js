@@ -1,60 +1,85 @@
-import { Box, Typography } from '@mui/material';
-import Grid from '@mui/material/Grid'; // Corrected Grid import
-import SearchBar from '../components/SearchBar';
-import FilterControls from '../components/FilterControls';
-import ShowCard from '../components/ShowCard';
-import { useAppContext } from '../context/AppContext';
+import React from "react";
+import { useSearch } from "../context/SearchContext";
+import { useNavigate } from "react-router-dom";
+import { Container, Grid2, Typography, Paper, CircularProgress, Button } from "@mui/material";
+import SearchBar from "../components/SearchBar";
+import FilterControls from "../components/FilterControls"
 
 const SearchAndFilterPage = () => {
-  const { shows, filters, updateFilter, searchShows } = useAppContext();
+  const { searchResults, loading, error } = useSearch();
+  const navigate = useNavigate();
 
-  const handleViewEpisodes = async (showId) => {
-    try {
-      const response = await fetch(`/api/episodes/${showId}`);
-      const data = await response.json();
-      updateFilter('episodes', data);
-    } catch (error) {
-      console.error('Error fetching episodes:', error);
-    }
+  const handleViewEpisodes = (showId) => {
+      navigate(`/episodes/${showId}`);
   };
 
-  const filteredShows = (shows || []).filter((show) => {
     return (
-      (!filters.genre || (show.genres && show.genres.includes(filters.genre))) &&
-      (!filters.rating || (show.rating?.average >= filters.rating)) &&
-      (!filters.language || show.language === filters.language)
-    );
-  });
+        <Container maxWidth="lg" sx={{ marginTop: 4 }}>
+            {/* Search Bar */}
+            <SearchBar />
+            <FilterControls />
 
-  return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" sx={{ mb: 3, textAlign: 'center' }}>
-        Search and Filter TV Shows
-      </Typography>
-      {/* Search Bar */}
-      <Box sx={{ mb: 3 }}>
-        <SearchBar onSearch={searchShows} />
-      </Box>
-      {/* Filter Controls */}
-      <Box sx={{ mb: 3 }}>
-        <FilterControls filters={filters} updateFilter={updateFilter} />
-      </Box>
-      {/* Show Results */}
-      <Grid container spacing={2}>
-        {filteredShows.length > 0 ? (
-          filteredShows.map((show) => (
-            <Grid item xs={12} sm={6} md={4} key={show.id}>
-              <ShowCard show={show} onViewEpisodes={handleViewEpisodes} />
-            </Grid>
-          ))
-        ) : (
-          <Typography variant="h6" sx={{ textAlign: 'center', mt: 3, width: '100%' }}>
-            No shows match your criteria.
-          </Typography>
-        )}
-      </Grid>
-    </Box>
-  );
+            {/* Status Messages */}
+            {loading && (
+                <Typography
+                    variant="h6"
+                    color="text.secondary"
+                    align="center"
+                    sx={{ marginTop: 2 }}
+                >
+                    <CircularProgress size={24} sx={{ marginRight: 1 }} />
+                    Searching...
+                </Typography>
+            )}
+            {error && (
+                <Typography variant="h6" color="error" align="center" sx={{ marginTop: 2 }}>
+                    Error: {error}
+                </Typography>
+            )}
+
+            {/* Search Results */}
+            <Grid2 container spacing={3} sx={{ marginTop: 4 }}>
+                {searchResults.length === 0 && !loading && !error && (
+                    <Typography
+                        variant="h6"
+                        color="text.secondary"
+                        align="center"
+                        sx={{ width: "100%" }}
+                    >
+                        No results found. Try searching for something else.
+                    </Typography>
+                )}
+                {searchResults.map((show, index) => (
+                    <Grid2 item xs={12} sm={6} md={4} key={index}>
+                        <Paper
+                            elevation={3}
+                            sx={{
+                                padding: 2,
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                gap: 1,
+                                backgroundColor: "#1e1e1e",
+                                color: "#ffffff",
+                            }}
+                        >
+                            <Typography variant="h6">{show.name}</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {show.description}
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => handleViewEpisodes(show.id)}
+                            >
+                                View Episodes
+                            </Button>
+                        </Paper>
+                    </Grid2>
+                ))}
+            </Grid2>
+        </Container>
+    );
 };
 
 export default SearchAndFilterPage;
