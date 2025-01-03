@@ -9,12 +9,10 @@ class SearchTVShows(APIView):
         if not query:
             return Response({"error": "Query parameter 'query' is required."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # TVmaze API URL for searching shows
         url = f"https://api.tvmaze.com/search/shows?q={query}"
         response = requests.get(url)
 
         if response.status_code == 200:
-            # Process the response data to extract required fields
             shows = [
                 {
                     "id": show["show"]["id"],
@@ -31,12 +29,10 @@ class SearchTVShows(APIView):
 
 class GetEpisodes(APIView):
     def get(self, request, show_id):
-        # TVmaze API URL for fetching episodes of a specific show
         url = f"https://api.tvmaze.com/shows/{show_id}/episodes"
         response = requests.get(url)
 
         if response.status_code == 200:
-            # Process the response data to extract required fields
             episodes = [
                 {
                     "id": episode["id"],

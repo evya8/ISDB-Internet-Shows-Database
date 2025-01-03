@@ -17,7 +17,6 @@ export const SearchProvider = ({ children }) => {
                 params: { query },
             });
             setSearchResults(response.data);
-            console.log(response.data);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -48,9 +47,6 @@ export const SearchProvider = ({ children }) => {
     
             return matchesGenre && matchesRating && matchesLanguage;
         });
-    
-        console.log("Filters:", filters);
-        console.log("Filtered Results:", results);
         return results;
     }, [searchResults, filters]);
     
