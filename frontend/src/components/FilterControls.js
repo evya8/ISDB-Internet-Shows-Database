@@ -58,8 +58,6 @@ const FilterControls = ({ filters = {}, updateFilter = () => {}, fetchFilteredDa
     setSelectedFilters((prev) => ({ ...prev, [filterName]: value }));
     updateFilter(filterName, value);
 
-    // Fetch filtered data (if required)
-    fetchFilteredData({ ...selectedFilters, [filterName]: value });
   };
 
   return (

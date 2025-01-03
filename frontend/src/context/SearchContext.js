@@ -5,7 +5,7 @@ const SearchContext = createContext();
 
 export const SearchProvider = ({ children }) => {
     const [searchResults, setSearchResults] = useState([]);
-    const [filters, setFilters] = useState({ genre: "", rating: "", language: "" });
+    const [filters, setFilters] = useState({ genre: [], ratingRange: [0, 10], language: "" });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
