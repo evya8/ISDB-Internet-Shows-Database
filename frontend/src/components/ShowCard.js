@@ -3,9 +3,11 @@ import { Card, CardContent, CardMedia, Typography, Button, Box, IconButton } fro
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useAppContext } from '../context/AppContext';
+import { useNavigate } from 'react-router-dom'; 
 
-const ShowCard = ({ show, onViewEpisodes }) => {
+const ShowCard = ({ show }) => {
   const { addFavorite, removeFavorite, isFavorite } = useAppContext();
+  const navigate = useNavigate(); 
 
   const handleToggleFavorite = () => {
     if (isFavorite(show.id)) {
@@ -15,6 +17,10 @@ const ShowCard = ({ show, onViewEpisodes }) => {
     }
   };
 
+  const handleViewEpisodes = () => {
+    navigate(`/episodes/${show.id}`, { state: { showName: show.name } }); 
+  };
+
   return (
     <Card sx={{ mb: 2, boxShadow: 3, display: 'flex', flexDirection: 'column' }}>
       {show.image && (
@@ -22,7 +28,7 @@ const ShowCard = ({ show, onViewEpisodes }) => {
           component="img"
           image={show.image}
           alt={show.name}
-          sx={{ height: 300, objectFit: 'cover' }}
+          sx={{ height: 390, objectFit: 'cover' }}
         />
       )}
       <CardContent sx={{ flex: 1 }}>
@@ -42,7 +48,7 @@ const ShowCard = ({ show, onViewEpisodes }) => {
         <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
           Rating: {show.rating || 'N/A'}
         </Typography>
-        <Button variant="contained" color="primary" onClick={() => onViewEpisodes(show.id)}>
+        <Button variant="contained" color="primary" onClick={handleViewEpisodes}>
           View Episodes
         </Button>
       </CardContent>

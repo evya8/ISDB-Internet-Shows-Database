@@ -11,10 +11,10 @@ const NavBar = () => {
     <AppBar position="fixed">
       <Toolbar>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          TV Show App
+          ISDB - Internet Shows Database
         </Typography>
         <IconButton
-          component={Link} // Link the icon to Favorites page
+          component={Link} 
           to="/favorites"
           color="inherit"
         >

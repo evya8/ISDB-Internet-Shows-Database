@@ -41,7 +41,7 @@ const FilterControls = ({ filters = {}, updateFilter = () => {} }) => {
       {/* Genre Filter */}
       <Select
         multiple
-        value={Array.isArray(defaultFilters.genre) ? defaultFilters.genre : []} // Ensure value is an array
+        value={Array.isArray(defaultFilters.genre) ? defaultFilters.genre : []} 
         onChange={(e) => updateFilter('genre', e.target.value)}
         displayEmpty
         renderValue={(selected) =>

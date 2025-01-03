@@ -26,9 +26,6 @@ const LeftBar = () => {
         <ListItem button component={Link} to="/favorites">
           <ListItemText primary="Favorites" />
         </ListItem>
-        <ListItem button component={Link} to="/episodes/:showId">
-          <ListItemText primary="Episodes" />
-        </ListItem>
       </List>
     </Box>
   );

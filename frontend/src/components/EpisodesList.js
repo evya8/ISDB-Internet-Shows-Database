@@ -96,7 +96,7 @@ const EpisodesList = ({ episodes }) => {
                     }}
                 >
                     {episode.summary
-                        ? episode.summary.replace(/<[^>]+>/g, "") // Remove HTML tags
+                        ? episode.summary.replace(/<[^>]+>/g, "") 
                         : "No summary available."}
                 </Typography>
             </Paper>
