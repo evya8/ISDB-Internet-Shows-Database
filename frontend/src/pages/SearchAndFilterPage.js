@@ -16,13 +16,11 @@ const SearchAndFilterPage = () => {
 
   return (
     <Container maxWidth="lg" sx={{ marginTop: 4 }}>
-      {/* Search Bar */}
+
       <SearchBar />
 
-      {/* Filter Controls */}
       <FilterControls filters={filters} updateFilter={updateFilter} />
 
-      {/* Status Messages */}
       {loading && (
         <Typography
           variant="h6"
@@ -40,7 +38,6 @@ const SearchAndFilterPage = () => {
         </Typography>
       )}
 
-      {/* Search Results */}
       <Grid2 container spacing={3} sx={{ marginTop: 4 }}>
         {filteredResults.length === 0 && !loading && !error && (
           <Typography

@@ -10,14 +10,14 @@ export const EpisodesProvider = ({ children }) => {
 
     const fetchEpisodes = useCallback(
         async (showId) => {
-            if (episodesByShow[showId]) return; // Skip if already fetched
+            if (episodesByShow[showId]) return; 
             setLoading(true);
             setError(null);
             try {
                 const response = await axiosInstance.get(`episodes/${showId}/`);
                 setEpisodesByShow((prev) => ({
                     ...prev,
-                    [showId]: response.data, // Store episodes for the specific show
+                    [showId]: response.data, 
                 }));
             } catch (err) {
                 setError(err.message);

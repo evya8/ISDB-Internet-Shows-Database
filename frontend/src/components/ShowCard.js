@@ -22,13 +22,13 @@ const ShowCard = ({ show }) => {
   };
 
   return (
-    <Card sx={{ mb: 2, boxShadow: 3, display: 'flex', flexDirection: 'column' }}>
+    <Card sx={{ mb: 2, boxShadow: 3,width:"250px" ,display: 'flex', flexDirection: 'column' }}>
       {show.image && (
         <CardMedia
           component="img"
           image={show.image}
           alt={show.name}
-          sx={{ height: 390, objectFit: 'cover' }}
+          sx={{ height: 380, objectFit: 'cover' }}
         />
       )}
       <CardContent sx={{ flex: 1 }}>
